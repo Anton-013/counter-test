@@ -3,18 +3,18 @@ import { Button } from "../Button/Button"
 import { Input } from "../Input/Input"
 
 type CounterConfigurationProps = {
-    setValue: (maxValue: string, initialValue: string) => void
+    setValue: (maxValue: number, initialValue: number) => void
 }
 
-export const CounterConfiguration = ({setValue}: CounterConfigurationProps) => {
+export const CounterConfiguration = ({ setValue }: CounterConfigurationProps) => {
 
-    const [maxValue, setMaxValue] = useState<string>('')
-    const [initialValue, setInitialValue] = useState<string>('')
+    const [maxValue, setMaxValue] = useState<number>(0)
+    const [initialValue, setInitialValue] = useState<number>(0)
 
     const onClickSetHandler = () => {
         setValue(maxValue, initialValue)
-        setMaxValue('')
-        setInitialValue('')
+        setMaxValue(0)
+        setInitialValue(0)
     }
 
     return (
@@ -22,11 +22,11 @@ export const CounterConfiguration = ({setValue}: CounterConfigurationProps) => {
             <div className={'block-input'}>
                 <div>
                     <span>max value</span>
-                    <Input setTitle={setMaxValue} title={maxValue}/>
+                    <Input setTitle={setMaxValue} title={maxValue} />
                 </div>
                 <div>
                     <span>start value</span>
-                    <Input setTitle={setInitialValue} title={initialValue}/>
+                    <Input setTitle={setInitialValue} title={initialValue} />
                 </div>
             </div>
             <div className={'block-button'}>

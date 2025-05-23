@@ -2,17 +2,17 @@ import type { ChangeEvent } from "react"
 
 
 type InputProps = {
-    setTitle: (title: string) => void
-    title: string
+    setTitle: (title: number) => void
+    title: number
 }
 
 export const Input = ({title, setTitle}: InputProps) => {
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
+        setTitle(Number(e.currentTarget.value))
     }
 
     return (
-        <input type='number' value={title} onChange={onChangeHandler}/>
+        <input type='number' value={String(title)} onChange={onChangeHandler}/>
     )
 }
