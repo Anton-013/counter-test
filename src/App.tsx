@@ -1,37 +1,20 @@
 
 import { useState } from 'react'
 import './App.css'
-import { Button } from './components/Button/Button'
-import { Scoreboard } from './components/Scoreboard/Scoreboard'
+import { Counter } from './components/Counter/Counter'
+import { UncontrollableCounter } from './components/UncontrollableCounter/UncontrollableCounter'
+import { CounterConfiguration } from './components/CounterConfiguration/CounterConfiguration'
 
 function App() {
 
-  const maxValue = 5
-  const initialValue = 0
-
-  const [counter, setCount] = useState<number>(initialValue)
-
-  const addCounter = () => {
-    if (counter < maxValue) {
-      setCount(counter + 1)
-    }
-
-  }
-
-  const resetCounter = () => {
-    setCount(initialValue)
-  }
+  const [maxValue, setMaxValue] = useState<number>(5)
+  const [initialValue, setInitialValue] = useState<number>(0)
 
   return (
     <>
-      <div className={'counter'}>
-        <Scoreboard meaning={counter} disabledValue={counter === maxValue} />
-        <div className={'block-button'}>
-          <Button name={'inc'} onClick={addCounter} disabled={counter === maxValue} />
-          <Button name={'reset'} onClick={resetCounter} disabled={counter === initialValue} />
-          {/* <Button name={'set'} disabled/> */}
-        </div>
-      </div>
+      <UncontrollableCounter />
+      <Counter maxValue={maxValue} initialValue={initialValue} />
+      <CounterConfiguration />
     </>
   )
 }
