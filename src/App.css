@@ -68,3 +68,15 @@
   color: rgb(51, 39, 57);
   background-image: linear-gradient(rgb(41, 40, 74), rgb(144, 144, 224));
 }
+
+.block-input {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 85%;
+  height: 30%;
+  border: 2px solid rgb(28, 25, 119);
+  border-radius: 5px;
+  background-image: linear-gradient(182deg, rgb(20, 20, 48), rgb(28, 25, 119) 20%);
+}
