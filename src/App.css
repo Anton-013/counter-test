@@ -81,3 +81,15 @@
   border-radius: 5px;
   background-image: linear-gradient(182deg, rgb(20, 20, 48), rgb(28, 25, 119) 20%);
 }
+
+.input-hint {
+  color: white;
+}
+
+.input-hint-error {
+  color: red;
+}
+
+.input-error {
+  border: 1px solid red;
+}
