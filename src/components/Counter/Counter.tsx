@@ -18,7 +18,6 @@ export const Counter = ({ maxValue, initialValue, counter, onClickInc, onClickRe
             <div className={'block-button'}>
                 <Button name={'inc'} onClick={onClickInc} disabled={counter === maxValue} />
                 <Button name={'reset'} onClick={onClickReset} disabled={counter === initialValue} />
-                {/* <Button name={'set'} disabled/> */}
             </div>
         </div>
     )
