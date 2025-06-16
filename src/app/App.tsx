@@ -4,8 +4,8 @@ import './App.css'
 import { Counter } from '../components/Counter/Counter'
 import { CounterConfiguration } from '../components/CounterConfiguration/CounterConfiguration'
 
-type CounterState = 'counter' | 'setting'
-interface CounterValues {
+export type CounterState = 'counter' | 'setting'
+export type CounterValues = {
   max: number;
   initial: number;
   current: number;
