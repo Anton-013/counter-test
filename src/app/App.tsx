@@ -4,47 +4,61 @@ import './App.css'
 import { Counter } from '../components/Counter/Counter'
 import { CounterConfiguration } from '../components/CounterConfiguration/CounterConfiguration'
 
+type CounterState = 'counter' | 'setting'
+interface CounterValues {
+  max: number;
+  initial: number;
+  current: number;
+}
+
 function App() {
 
-  const [maxValue, setMaxValue] = useState<number>(5)
-  const [initialValue, setInitialValue] = useState<number>(0)
-  const [counter, setCount] = useState<number>(0)
-  const [counterState, setCounterState] = useState<'counter' | 'setting'>('counter')
+  const [values, setValues] = useState<CounterValues>({ max: 5, initial: 0, current: 0, })
 
-  const onClickInc = () => {
-    if (counter < maxValue) {
-      setCount(counter + 1)
+  // const [maxValue, setMaxValue] = useState<number>(5)
+  // const [initialValue, setInitialValue] = useState<number>(0)
+  // const [counter, setCount] = useState<number>(0)
+  const [counterState, setCounterState] = useState<CounterState>('counter')
+
+  const handlerIncrement = () => {
+    if (values.current < values.max) {
+      setValues(prev => ({ ...prev, current: prev.current + 1 }))
     }
   }
 
-  const onClickReset = () => {
-    setCount(initialValue)
+  const handlerReset = () => {
+    setValues(prev => ({ ...prev, current: prev.initial }))
   }
 
-  const onClickSet = () => {
+  const handlerOpenSetting = () => {
     setCounterState('setting')
   }
 
-  const setValue = (maxSetValue: number, initialSetValue: number) => {
-    setMaxValue(maxSetValue)
-    setInitialValue(initialSetValue)
-    setCount(initialSetValue)
+  const handlerSaveSetting = (maxSetValue: number, initialValue: number) => {
+    setValues({ max: maxSetValue, initial: initialValue, current: initialValue, })
     setCounterState('counter')
   }
 
   return (
-    <>
+    <div>
       {/* <UncontrollableCounter /> */}
-      {counterState === 'counter'
-        ? <Counter
-          maxValue={maxValue}
-          initialValue={initialValue}
-          counter={counter}
-          onClickInc={onClickInc}
-          onClickReset={onClickReset}
-          onClickSet={onClickSet} />
-        : <CounterConfiguration setValue={setValue} />}
-    </>
+      {counterState === 'counter' ? (
+        <Counter
+          maxValue={values.max}
+          initialValue={values.initial}
+          counter={values.current}
+          onIncrement={handlerIncrement}
+          onReset={handlerReset}
+          onSetting={handlerOpenSetting}
+        />
+      ) : (
+        <CounterConfiguration
+          onSave={handlerSaveSetting}
+          initialMaxValue={values.max}
+          initialStartValue={values.initial}
+        />
+      )}
+    </div>
   )
 }
 

@@ -3,16 +3,18 @@ import { Button } from "../Button/Button"
 import { Input } from "../Input/Input"
 
 type CounterConfigurationProps = {
-    setValue: (maxValue: number, initialValue: number) => void
+    onSave: (maxValue: number, initialValue: number) => void
+    initialMaxValue: number
+    initialStartValue: number
 }
 
-export const CounterConfiguration = ({ setValue }: CounterConfigurationProps) => {
+export const CounterConfiguration = ({ onSave, initialMaxValue, initialStartValue, }: CounterConfigurationProps) => {
 
-    const [maxValue, setMaxValue] = useState<number>(0)
-    const [initialValue, setInitialValue] = useState<number>(0)
+    const [maxValue, setMaxValue] = useState<number>(initialMaxValue)
+    const [initialValue, setInitialValue] = useState<number>(initialStartValue)
 
     const onClickSetHandler = () => {
-        setValue(maxValue, initialValue)
+        onSave(maxValue, initialValue)
     }
 
     const checkCondition = () => {

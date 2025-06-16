@@ -5,20 +5,20 @@ export type CounterProps = {
     maxValue: number
     initialValue: number
     counter: number
-    onClickInc: () => void
-    onClickReset: () => void
-    onClickSet: () => void
+    onIncrement: () => void
+    onReset: () => void
+    onSetting: () => void
 }
 
-export const Counter = ({ maxValue, initialValue, counter, onClickInc, onClickReset, onClickSet }: CounterProps) => {
+export const Counter = ({ maxValue, initialValue, counter, onIncrement, onReset, onSetting }: CounterProps) => {
 
     return (
         <div className={'counter'}>
             <Scoreboard meaning={counter} disabledValue={counter === maxValue} />
             <div className={'block-button'}>
-                <Button name={'inc'} onClick={onClickInc} disabled={counter === maxValue} />
-                <Button name={'reset'} onClick={onClickReset} disabled={counter === initialValue} />
-                <Button name={'set'} onClick={onClickSet}/>
+                <Button name={'inc'} onClick={onIncrement} disabled={counter === maxValue} />
+                <Button name={'reset'} onClick={onReset} disabled={counter === initialValue} />
+                <Button name={'set'} onClick={onSetting}/>
             </div>
         </div>
     )
