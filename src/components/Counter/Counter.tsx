@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { Button } from "../Button/Button"
 import { Scoreboard } from "../Scoreboard/Scoreboard"
 
@@ -8,9 +7,10 @@ export type CounterProps = {
     counter: number
     onClickInc: () => void
     onClickReset: () => void
+    onClickSet: () => void
 }
 
-export const Counter = ({ maxValue, initialValue, counter, onClickInc, onClickReset }: CounterProps) => {
+export const Counter = ({ maxValue, initialValue, counter, onClickInc, onClickReset, onClickSet }: CounterProps) => {
 
     return (
         <div className={'counter'}>
@@ -18,6 +18,7 @@ export const Counter = ({ maxValue, initialValue, counter, onClickInc, onClickRe
             <div className={'block-button'}>
                 <Button name={'inc'} onClick={onClickInc} disabled={counter === maxValue} />
                 <Button name={'reset'} onClick={onClickReset} disabled={counter === initialValue} />
+                <Button name={'set'} onClick={onClickSet}/>
             </div>
         </div>
     )
