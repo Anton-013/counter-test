@@ -1,8 +1,9 @@
 
-import { useState } from 'react'
+import { useReducer, useState } from 'react'
 import './App.css'
 import { Counter } from '../components/Counter/Counter'
 import { CounterConfiguration } from '../components/CounterConfiguration/CounterConfiguration'
+import { incrementAC, resetAC, saveSettingAC, valuesReducer } from '../model/values-reducer'
 
 export type CounterState = 'counter' | 'setting'
 export type CounterValues = {
@@ -13,21 +14,17 @@ export type CounterValues = {
 
 function App() {
 
-  const [values, setValues] = useState<CounterValues>({ max: 5, initial: 0, current: 0, })
-
-  // const [maxValue, setMaxValue] = useState<number>(5)
-  // const [initialValue, setInitialValue] = useState<number>(0)
-  // const [counter, setCount] = useState<number>(0)
+  const [values, dispatchToValues] = useReducer(valuesReducer, { max: 5, initial: 0, current: 0, })
   const [counterState, setCounterState] = useState<CounterState>('counter')
 
   const handlerIncrement = () => {
     if (values.current < values.max) {
-      setValues(prev => ({ ...prev, current: prev.current + 1 }))
+      dispatchToValues(incrementAC())
     }
   }
 
   const handlerReset = () => {
-    setValues(prev => ({ ...prev, current: prev.initial }))
+    dispatchToValues(resetAC())
   }
 
   const handlerOpenSetting = () => {
@@ -35,7 +32,7 @@ function App() {
   }
 
   const handlerSaveSetting = (maxSetValue: number, initialValue: number) => {
-    setValues({ max: maxSetValue, initial: initialValue, current: initialValue, })
+    dispatchToValues(saveSettingAC({maxSetValue, initialValue }))
     setCounterState('counter')
   }
 
