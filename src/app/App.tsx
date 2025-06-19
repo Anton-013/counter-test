@@ -1,9 +1,10 @@
 
-import { useReducer, useState } from 'react'
+import { useReducer } from 'react'
 import './App.css'
 import { Counter } from '../components/Counter/Counter'
 import { CounterConfiguration } from '../components/CounterConfiguration/CounterConfiguration'
 import { incrementAC, resetAC, saveSettingAC, valuesReducer } from '../model/values-reducer'
+import { counterStateReducer, openSettingAC } from '../model/counterState-reducer'
 
 export type CounterState = 'counter' | 'setting'
 export type CounterValues = {
@@ -15,7 +16,7 @@ export type CounterValues = {
 function App() {
 
   const [values, dispatchToValues] = useReducer(valuesReducer, { max: 5, initial: 0, current: 0, })
-  const [counterState, setCounterState] = useState<CounterState>('counter')
+  const [counterState, dispatchToCounterState] = useReducer(counterStateReducer, 'counter')
 
   const handlerIncrement = () => {
     if (values.current < values.max) {
@@ -28,12 +29,12 @@ function App() {
   }
 
   const handlerOpenSetting = () => {
-    setCounterState('setting')
+    dispatchToCounterState(openSettingAC())
   }
 
   const handlerSaveSetting = (maxSetValue: number, initialValue: number) => {
     dispatchToValues(saveSettingAC({maxSetValue, initialValue }))
-    setCounterState('counter')
+    dispatchToCounterState(saveSettingAC({maxSetValue, initialValue }))
   }
 
   return (
