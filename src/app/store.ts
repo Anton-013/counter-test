@@ -1,11 +1,11 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { valuesReducer } from "../model/values-reducer";
+import { counterStateReducer } from "../model/counterState-reducer";
 
 
 const rootReduser = combineReducers({
-//   maxValue: maxValueReducer,
-//   initialValue: initialValueReducer,
-//   counter: counterReducer,
-//   counterState: counterStateReducer,
+    values: valuesReducer,
+    counterState: counterStateReducer,
 })
 
 export const store = configureStore({

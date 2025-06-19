@@ -1,10 +1,13 @@
 
-import { useReducer } from 'react'
 import './App.css'
 import { Counter } from '../components/Counter/Counter'
 import { CounterConfiguration } from '../components/CounterConfiguration/CounterConfiguration'
-import { incrementAC, resetAC, saveSettingAC, valuesReducer } from '../model/values-reducer'
-import { counterStateReducer, openSettingAC } from '../model/counterState-reducer'
+import { incrementAC, resetAC, saveSettingAC } from '../model/values-reducer'
+import { openSettingAC } from '../model/counterState-reducer'
+import { useAppSelector } from '../common/hooks/useAppSelector'
+import { useAppDispatch } from '../common/hooks/useAppDispatch'
+import { selectValues } from '../model/values-selectors'
+import { selectCounterState } from '../model/counterState-selectors'
 
 export type CounterState = 'counter' | 'setting'
 export type CounterValues = {
@@ -15,31 +18,31 @@ export type CounterValues = {
 
 function App() {
 
-  const [values, dispatchToValues] = useReducer(valuesReducer, { max: 5, initial: 0, current: 0, })
-  const [counterState, dispatchToCounterState] = useReducer(counterStateReducer, 'counter')
+  const values = useAppSelector(selectValues)
+  const counterState = useAppSelector(selectCounterState)
+
+  const dispatch = useAppDispatch()
 
   const handlerIncrement = () => {
     if (values.current < values.max) {
-      dispatchToValues(incrementAC())
+      dispatch(incrementAC())
     }
   }
 
   const handlerReset = () => {
-    dispatchToValues(resetAC())
+    dispatch(resetAC())
   }
 
   const handlerOpenSetting = () => {
-    dispatchToCounterState(openSettingAC())
+    dispatch(openSettingAC())
   }
 
   const handlerSaveSetting = (maxSetValue: number, initialValue: number) => {
-    dispatchToValues(saveSettingAC({maxSetValue, initialValue }))
-    dispatchToCounterState(saveSettingAC({maxSetValue, initialValue }))
+    dispatch(saveSettingAC({maxSetValue, initialValue }))
   }
 
   return (
     <div>
-      {/* <UncontrollableCounter /> */}
       {counterState === 'counter' ? (
         <Counter
           maxValue={values.max}
