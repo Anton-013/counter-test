@@ -1,28 +1,20 @@
-import { type SaveSettingAction } from './values-reducer';
+import { saveSettingAC } from './values-reducer';
 import type { CounterState } from "../app/App";
+import { createAction, createReducer } from '@reduxjs/toolkit';
 
-export const openSettingAC = () => {
-    return { type: 'open-setting' } as const
-}
+export const openSettingAC = createAction('counterState/openSetting')
 
 const initialState: CounterState = "counter"
 
-export type OpenSettingAction = ReturnType<typeof openSettingAC>
-
-type Actions = OpenSettingAction | SaveSettingAction
-
-export const counterStateReducer = (state: CounterState = initialState, action: Actions): CounterState => {
-    switch (action.type) {
-        case 'open-setting': {
-            return 'setting'
-        }
-        case 'save-setting' : {
+export const counterStateReducer = createReducer<CounterState>(initialState, (builder) => {
+    builder
+        .addCase(saveSettingAC, () => {
             return 'counter'
-        }
-        default : 
-            return state
-    }
-}
+        })
+        .addCase(openSettingAC, () => {
+            return 'setting'
+        })
+})
 
 
 

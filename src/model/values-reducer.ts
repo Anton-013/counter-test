@@ -1,34 +1,31 @@
+import { createAction, createReducer } from "@reduxjs/toolkit"
 import type { CounterValues } from "../app/App"
 
-export const incrementAC = () => {
-    return { type: 'increment' } as const
-}
-export const resetAC = () => {
-    return { type: 'reset' } as const
-}
-export const saveSettingAC = ({maxSetValue, initialValue} : {maxSetValue: number, initialValue: number}) => {
-    return { type: 'save-setting', payload: { maxSetValue, initialValue } }
-}
+export const incrementAC = createAction('values/increment')
+export const resetAC = createAction('values/recet')
+export const saveSettingAC = createAction<{ maxSetValue: number, initialValue: number }>('valuse/saveSetting')
 
 const initialState: CounterValues = { current: 0, initial: 0, max: 5 }
 
-export const valuesReducer = (state: CounterValues = initialState, action: Actions): CounterValues => {
-    switch (action.type) {
-        case 'increment': {
-            return state.current < state.max
-                ? { ...state, current: state.current + 1 }
-                : state
-        }
-        case 'reset': {
-            return { ...state, current: state.initial }
-        }
-        case 'save-setting': {
-            return { max: action.payload.maxSetValue, current: action.payload.initialValue, initial: action.payload.initialValue }
-        }
-        default:
+export const valuesReducer = createReducer(initialState, (builder) => {
+    builder
+        .addCase(incrementAC, (state) => {
+            if (state.current < state.max) {
+                return {...state, current: state.current + 1} 
+            }
             return state
-    }
-}
+        })
+        .addCase(resetAC, (state) => {
+            return {...state, current: state.initial}
+        })
+        .addCase(saveSettingAC, (_state, action) => {
+            return {
+                max: action.payload.maxSetValue,
+                initial: action.payload.initialValue,
+                current: action.payload.initialValue,
+            }
+        })
+})
 
 export type IncrementAction = ReturnType<typeof incrementAC>
 export type ResetAction = ReturnType<typeof resetAC>
